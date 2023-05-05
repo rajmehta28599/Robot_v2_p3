@@ -106,9 +106,8 @@ def apriltagDetectionFunction(at_x, at_y, at_z, at_yaw, at_tag_id, tag_detection
                        [80, 80, 80, 80, 80],
                        [80, 80, 80, 80, 80],
                        ]
-    '''
-    x range 0 to 640
-    '''
+    # x range 0 to 640
+    
     B_x1, B_x2 = 20, 620
     
     # y range 0 to 480
