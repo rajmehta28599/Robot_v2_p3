@@ -73,18 +73,15 @@ def apriltagDetectionFunction(at_x, at_y, at_z, at_yaw, at_tag_id, tag_detection
     
     y1, y2, y3, y4 = 300, 475, 10, 300
 
-    '''
-    number of partition on path
-    '''
+    # number of partition on path
+    
     # near to robot < 500mm
     part_y0 = 7
     part_length_y0 = int((y4-y3)/part_y0)
     # near to robot < 500mm
     part_y480 = 10
     part_length_y480 = int((y2-y1)/part_y480)
-    '''
-    fonr style
-    '''
+    # fonr style
     font = FONT_HERSHEY_SIMPLEX
     t_detect0 = [1111]
     # t_detect0_min = [0]
