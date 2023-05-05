@@ -113,9 +113,7 @@ def apriltagDetectionFunction(at_x, at_y, at_z, at_yaw, at_tag_id, tag_detection
     # y range 0 to 480
     B_y1, B_y2 = 2, 460
 
-    '''
-    number of partition on path
-    '''
+    # number of partition on path
     # near to robot < 500mm
     B_part_x0, B_part_y0 = 5, 4
     B_part_length_y0 = int((B_y2 - B_y1) / B_part_y0)
