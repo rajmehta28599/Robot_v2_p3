@@ -143,7 +143,7 @@ def apriltagDetectionFunction(at_x, at_y, at_z, at_yaw, at_tag_id, tag_detection
         pipelineB = pipeline()
         configB = config()
         configB.enable_device('827112071410')
-        configB.enable_stream(stream.depth, 640, 480, format.z16, 90)
+        configB.enable_stream(stream.depth, 640, 480, format.z16, 60)
         configB.enable_stream(stream.color, 640, 480, format.bgr8, 30)
         cfgB = pipelineB.start(configB)
         devB = cfgB.get_device()
@@ -202,26 +202,27 @@ def apriltagDetectionFunction(at_x, at_y, at_z, at_yaw, at_tag_id, tag_detection
     stdout.flush()
 
     while True:
+        try:
+            if waitKey(1) == 113 or input_process_enableflag.value == 1:  # 16/12/22 12:18pm
+                cap.release()
+                ret = 0
+                pipelineT.stop()
+                configT.disable_all_streams()
+                pipelineB.stop()
+                configB.disable_all_streams()
+                apriltagmodule_flag.value = 1
+                input_process_enableflag.value = 2
+                stdout.write("\n[--->ADF] break: if input_process_enableflag.value == 1: apriltagmodule_flag.value={}, t2_april={},".format(apriltagmodule_flag.value, t2_april))
+                stdout.flush()
+                break
+        except Exception as e:
+            stdout.write("\n\n\n[--->ADF]input_process_enableflag.value==1 t2_april={}, exception={},".format(t2_april, e))
+            stdout.flush()
+            pass
+
         t2_april = time() - t1_april
         if t2_april > (0.033):  # and t1 < (0.05):
             t1_april = time()
-            try:
-                if waitKey(1) == 113 or input_process_enableflag.value == 1:  # 16/12/22 12:18pm
-                    cap.release()
-                    ret = 0
-                    pipelineT.stop()
-                    configT.disable_all_streams()
-                    pipelineB.stop()
-                    configB.disable_all_streams()
-                    apriltagmodule_flag.value = 1
-                    input_process_enableflag.value = 2
-                    stdout.write("\n[--->ADF] break: if input_process_enableflag.value == 1: apriltagmodule_flag.value={}, t2_april={},".format(apriltagmodule_flag.value, t2_april))
-                    stdout.flush()
-                    break
-            except Exception as e:
-                stdout.write("\n\n\n[--->ADF]input_process_enableflag.value==1 t2_april={}, exception={},".format(t2_april, e))
-                stdout.flush()
-                pass
             try:
                 if CameraIndex != (-1):
                     try:
@@ -459,7 +460,7 @@ def apriltagDetectionFunction(at_x, at_y, at_z, at_yaw, at_tag_id, tag_detection
 
         # Top Depth
         t2_depth = time() - t1_depth
-        if t2_depth > (0.011):
+        if t2_depth > (0.016):
             t1_depth = time()
             # stdout.write("\n[--->ADF_TopDepth]if dataToTeensy[0][0] >= 4: t2_depth={},".format(t2_depth))
             # stdout.flush()
@@ -569,7 +570,7 @@ def apriltagDetectionFunction(at_x, at_y, at_z, at_yaw, at_tag_id, tag_detection
                 pass
 
             # imshow('tracking', color_image)
-            imshow('Top DepthImage', depth_click)
+            # imshow('Top DepthImage', depth_click)
             # imwrite('_D.png', depth_click)
             # break the script
 
@@ -578,7 +579,7 @@ def apriltagDetectionFunction(at_x, at_y, at_z, at_yaw, at_tag_id, tag_detection
 
         # Bottom Depth Camera
         b2_depth = time() - b1_depth
-        if b2_depth > (0.011):
+        if b2_depth > (0.016):
             b1_depth = time()
             # stdout.write("\n[--->ADF_BottomDepth]if dataToTeensy[0][0] >= 4: b2_depth={},".format(b2_depth))
             # stdout.flush()
