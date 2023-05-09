@@ -203,7 +203,7 @@ def apriltagDetectionFunction(at_x, at_y, at_z, at_yaw, at_tag_id, tag_detection
 
     while True:
         t2_april = time() - t1_april
-        if t2_april > (0.015):  # and t1 < (0.05):
+        if t2_april > (0.033):  # and t1 < (0.05):
             t1_april = time()
             try:
                 if waitKey(1) == 113 or input_process_enableflag.value == 1:  # 16/12/22 12:18pm
